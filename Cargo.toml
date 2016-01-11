@@ -1,0 +1,7 @@
+[package]
+name = "hazelcast-rest"
+version = "0.1.0"
+authors = ["orhanbalci <orhanbalci@gmail.com>"]
+
+[dependencies]
+ease = "*"
