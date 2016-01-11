@@ -1,7 +1,10 @@
 [package]
-name = "hazelcast-rest"
+name = "hazelcast_rest"
+description = "A library for building REST clients"
+repository = "https://github.com/orhanbalci/rust-hazelcast-rest"
 version = "0.1.0"
 authors = ["orhanbalci <orhanbalci@gmail.com>"]
+keywords = ["rest", "api", "client", "hazelcast"]
 
 [dependencies]
 ease = "*"
