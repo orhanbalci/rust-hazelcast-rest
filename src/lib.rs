@@ -1,6 +1,5 @@
 extern crate ease;
 extern crate hyper;
-extern crate core;
 
 use ease::{Url, Request, Error};
 use hyper::header::ContentType;
@@ -18,7 +17,7 @@ impl HazelcastRestClient {
             port: port,
         }
     }
-    
+
     pub fn queue_offer<T: ToString>(self: &Self,
                                     queue_name: &str,
                                     value: T)
