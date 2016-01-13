@@ -1,6 +1,10 @@
 extern crate ease;
+extern crate hyper;
+extern crate core;
 
-use ease::{Url, Request, Response, Error};
+use ease::{Url, Request, Error};
+use hyper::header::ContentType;
+use hyper::mime::{Mime, TopLevel, SubLevel};
 
 pub struct HazelcastRestClient {
     ip_address: &'static str,
@@ -14,43 +18,99 @@ impl HazelcastRestClient {
             port: port,
         }
     }
-    // http://node IP address:port/hazelcast/rest/queues/queueName
+    
     pub fn queue_offer<T: ToString>(self: &Self,
                                     queue_name: &str,
                                     value: T)
-                                    -> Result<Response, Error> {
+                                    -> Result<String, Error> {
         let url_string = format!("http://{}:{}/hazelcast/rest/queues/{}",
                                  self.ip_address,
                                  self.port,
                                  queue_name);
         let url = Url::parse(&url_string).unwrap();
-        Request::new(url).body(value.to_string()).post()
+        Request::new(url)
+            .header(ContentType(Mime(TopLevel::Text, SubLevel::Plain, vec![])))
+            .body(value.to_string())
+            .post()
+            .and_then(|x| Ok(x.body))
     }
 
-    pub fn queue_delete(self: &Self, queue_name: &str, timeout: i32) -> Result<Response, Error> {
+    pub fn queue_delete(self: &Self, queue_name: &str, timeout: i32) -> Result<String, Error> {
         let url_string = format!("http://{}:{}/hazelcast/rest/queues/{}/{}",
                                  self.ip_address,
                                  self.port,
                                  queue_name,
                                  timeout.to_string());
         let url = Url::parse(&url_string).unwrap();
-        Request::new(url).delete()
+        Request::new(url).delete().and_then(|x| Ok(x.body))
     }
 
-    pub fn queue_size(self: &Self, queue_name: &str) -> Result<Response, Error> {
+    pub fn queue_size(self: &Self, queue_name: &str) -> Result<String, Error> {
         let url_string = format!("http://{}:{}/hazelcast/rest/queues/{}/size",
                                  self.ip_address,
                                  self.port,
                                  queue_name);
         let url = Url::parse(&url_string).unwrap();
-        Request::new(url).get()
+        Request::new(url).get().and_then(|x| Ok(x.body))
+    }
+
+    pub fn map_put<T: ToString>(self: &Self,
+                                map_name: &str,
+                                key_name: &str,
+                                value: T)
+                                -> Result<String, Error> {
+
+        let url_string = format!("http://{}:{}/hazelcast/rest/maps/{}/{}",
+                                 self.ip_address,
+                                 self.port,
+                                 map_name,
+                                 key_name);
+        let url = Url::parse(&url_string).unwrap();
+        Request::new(url)
+            .header(ContentType(Mime(TopLevel::Text, SubLevel::Plain, vec![])))
+            .body(value.to_string())
+            .post()
+            .and_then(|x| Ok(x.body))
+    }
+
+    pub fn map_get(self: &Self, map_name: &str, key_name: &str) -> Result<String, Error> {
+
+        let url_string = format!("http://{}:{}/hazelcast/rest/maps/{}/{}",
+                                 self.ip_address,
+                                 self.port,
+                                 map_name,
+                                 key_name);
+        let url = Url::parse(&url_string).unwrap();
+        Request::new(url)
+            .header(ContentType(Mime(TopLevel::Text, SubLevel::Plain, vec![])))
+            .get()
+            .and_then(|x| Ok(x.body))
+    }
+
+    pub fn map_remove(self: &Self, map_name: &str, key_name: &str) -> Result<String, Error> {
+        let url_string = format!("http://{}:{}/hazelcast/rest/maps/{}/{}",
+                                 self.ip_address,
+                                 self.port,
+                                 map_name,
+                                 key_name);
+        let url = Url::parse(&url_string).unwrap();
+        Request::new(url).delete().and_then(|x| Ok(x.body))
+    }
+
+    pub fn map_remove_all(self: &Self, map_name: &str) -> Result<String, Error> {
+        let url_string = format!("http://{}:{}/hazelcast/rest/maps/{}",
+                                 self.ip_address,
+                                 self.port,
+                                 map_name);
+        let url = Url::parse(&url_string).unwrap();
+        Request::new(url).delete().and_then(|x| Ok(x.body))
     }
 }
 #[test]
 fn it_works() {
     let client = HazelcastRestClient::new("192.168.1.23", "5701");
-    match client.queue_offer::<String>("orhan", "balci".to_owned()) {
-        Ok(resp) => println!("{:?}",resp),
-        Err(err) => println!("{:?}",err)
+    match client.queue_offer::<String>("orhan", "3".to_owned()) {
+        Ok(resp) => println!("{:?}", resp),
+        Err(err) => println!("{:?}", err),
     }
 }
