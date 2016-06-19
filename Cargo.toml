@@ -1,10 +1,13 @@
 [package]
 name = "hazelcast_rest"
-description = "A library for building REST clients"
+description = "A library wrapping Hazelcast Rest API"
 repository = "https://github.com/orhanbalci/rust-hazelcast-rest"
 version = "0.1.0"
 authors = ["orhanbalci <orhanbalci@gmail.com>"]
 keywords = ["rest", "api", "client", "hazelcast"]
+documentation ="https://orhanbalci.github.io/rust-hazelcast-rest"
+license="MIT"
+exclude=[".travis.yml"]
 
 [dependencies]
 hyper = "*"
