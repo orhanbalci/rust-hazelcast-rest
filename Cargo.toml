@@ -7,5 +7,4 @@ authors = ["orhanbalci <orhanbalci@gmail.com>"]
 keywords = ["rest", "api", "client", "hazelcast"]
 
 [dependencies]
-ease = "*"
 hyper = "*"
