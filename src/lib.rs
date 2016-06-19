@@ -128,7 +128,8 @@ impl HazelcastRestClient {
 #[test]
 fn it_works() {
     let client = HazelcastRestClient::new("10.0.2.15", "5701");
-    println!("{:?}",client.queue_offer::<String>("orhan", "3".to_owned()));
+    client.queue_offer::<String>("orhan", "3".to_owned());
     client.queue_offer::<String>("orhan", "4".to_owned());
-    println!("{:?}", client.queue_size("orhan"));
+    assert_eq!(12, client.queue_size("orhan").unwrap().parse::<i32>().unwrap());
+    assert_eq!(3, client.queue_delete("orhan",10).unwrap().parse::<i32>().unwrap());
 }
