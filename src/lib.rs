@@ -6,22 +6,28 @@
 //!
 //! #example
 //!
-//! '''no_run
+//! ```no_run
+//!
 //! let client = HazelcastRestClient::new("10.0.2.15", "5701");
 //! client.queue_offer::<String>("sample_queue", "3".to_owned());
 //! client.queue_offer::<String>("sample_queue", "4".to_owned());
 //! assert_eq!(3, client.queue_delete("sample_queue", 10).unwrap().parse::<i32>().unwrap());
 //!
+//! ```
+//!
 //! #example
 //!
-//! '''no_run
+//! ```no_run
+//!
 //! let client = HazelcastRestClient::new("10.0.2.15", "5701");
-//!    client.map_put::<String>("capital_map", "Turkey", "Ankara".to_owned());
-//!    client.map_put::<String>("capital_map", "France", "Paris".to_owned());
-//!    client.map_put::<String>("capital_map", "Turkey", "Istanbul".to_owned());
-//!    client.map_remove_all("capital_map");
-//!    assert_eq!("Ankara", client.map_get("capital_map", "Turkey").unwrap());
-//!    assert_eq!("Paris", client.map_get("capital_map", "France").unwrap());
+//! client.map_put::<String>("capital_map", "Turkey", "Ankara".to_owned());
+//! client.map_put::<String>("capital_map", "France", "Paris".to_owned());
+//! client.map_put::<String>("capital_map", "Turkey", "Istanbul".to_owned());
+//! client.map_remove_all("capital_map");
+//! assert_eq!("Ankara", client.map_get("capital_map", "Turkey").unwrap());
+//! assert_eq!("Paris", client.map_get("capital_map", "France").unwrap());
+//!
+//! ```
 
 extern crate hyper;
 use hyper::*;
