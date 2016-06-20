@@ -8,6 +8,7 @@
 //!
 //! ```no_run
 //!
+//! use hazelcast_rest::HazelcastRestClient;
 //! let client = HazelcastRestClient::new("10.0.2.15", "5701");
 //! client.queue_offer::<String>("sample_queue", "3".to_owned());
 //! client.queue_offer::<String>("sample_queue", "4".to_owned());
@@ -19,6 +20,7 @@
 //!
 //! ```no_run
 //!
+//! use hazelcast_rest::HazelcastRestClient;
 //! let client = HazelcastRestClient::new("10.0.2.15", "5701");
 //! client.map_put::<String>("capital_map", "Turkey", "Ankara".to_owned());
 //! client.map_put::<String>("capital_map", "France", "Paris".to_owned());
