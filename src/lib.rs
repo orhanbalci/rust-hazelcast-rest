@@ -1,7 +1,7 @@
 //! This library is a wrapper around Hazelcast Rest API.
 //! API includes methods to interact with distributed queues and maps only. 
 //! User can offer elements to named queues and poll elements from them.
-//! User can also put elements to a map, rmeove elements one by one or remove all elements
+//! User can also put elements to a map, remove elements one by one or remove all elements at once
 //! from a map.
 //!
 //! #example
