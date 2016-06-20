@@ -10,4 +10,4 @@ license="MIT"
 exclude=[".travis.yml"]
 
 [dependencies]
-hyper = "*"
+hyper = "0.9.8"
